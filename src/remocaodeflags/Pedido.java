@@ -12,7 +12,7 @@ public class Pedido {
     }
     
     public double setValor(double valor) {
-        this.valor = valor;
+        return this.valor = valor;
     }
 }
 

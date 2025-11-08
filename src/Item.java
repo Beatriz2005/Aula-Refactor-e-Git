@@ -17,6 +17,7 @@ public class Item {
     // Primeiro code smell perceptível é que o método é muito longo
     public void updateQuality() {
         // Outro code smell bem claro é o feature envy, quase tudo utilizando nesse método é da classe Item
+        // por fim, outro code smell é a classe ser muito grande, poderia ser quebrada em várias classes
             if (!this.name.equals("Aged Brie")
                     && !this.name.equals("Backstage passes to a TAFKAL80ETC concert")
                     && !this.name.equals("Conjured Mana Cake")
@@ -101,4 +102,15 @@ public class Item {
             this.quality = this.quality + 1;
         }
     }
+
+    public void update(){
+        // comportamento padrão
+        sellIn--;
+        if (quality > 0) {
+            quality--;
+        }
+        if (sellIn < 0 && quality > 0) {
+            quality--;
+        }
+    };
 }
