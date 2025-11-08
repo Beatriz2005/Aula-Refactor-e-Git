@@ -13,4 +13,88 @@ public class Item {
     public String toString() {
         return this.name + ", " + this.sellIn + ", " + this.quality;
     }
-}
+
+    // Primeiro code smell perceptível é que o método é muito longo
+    public void updateQuality() {
+        // Outro code smell bem claro é o feature envy, quase tudo utilizando nesse método é da classe Item
+            if (!this.name.equals("Aged Brie")
+                    && !this.name.equals("Backstage passes to a TAFKAL80ETC concert")
+                    && !this.name.equals("Conjured Mana Cake")
+                    && !this.name.equals("Eternal Artifact")) {
+                if (this.quality > 0) {
+                    if (!this.name.equals("Sulfuras, Hand of Ragnaros")) {
+                        this.quality = this.quality - 1;
+                        // Additional degradation for perishable items
+                        if (this.name.contains("Perishable")) {
+                            this.quality = this.quality - 1;
+                        }
+                    }
+                }
+            } else {
+                if (this.quality < 50) {
+                    this.quality = this.quality + 1;
+                    if (this.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                        if (this.sellIn < 11) {
+                            if (this.quality < 50) {
+                                this.quality = this.quality + 1;
+                            }
+                        }
+                        if (this.sellIn < 6) {
+                            if (this.quality < 50) {
+                                this.quality = this.quality + 1;
+                            }
+                        }
+                    } else if (this.name.equals("Conjured Mana Cake")) {
+                        // Conjured items degrade twice as fast
+                        this.quality = this.quality + 1; // But for quality increase? Wait, adjust logic
+                    } else if (this.name.equals("Eternal Artifact")) {
+                        // Increases quality over time, but slowly
+                        if (this.sellIn % 2 == 0) {
+                            this.quality = this.quality + 1;
+                        }
+                    }
+                }
+            }
+
+            if (!this.name.equals("Sulfuras, Hand of Ragnaros") && !this.name.equals("Eternal Artifact")) {
+                this.sellIn = this.sellIn - 1;
+            }
+
+            if (this.sellIn < 0) {
+                if (!this.name.equals("Aged Brie")) {
+                    if (!this.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                        if (this.quality > 0) {
+                            if (!this.name.equals("Sulfuras, Hand of Ragnaros")) {
+                                this.quality = this.quality - 1;
+                                if (this.name.equals("Conjured Mana Cake")) {
+                                    this.quality = this.quality - 1; // Extra degradation
+                                }
+                                // Handle perishable post-sellIn
+                                if (this.name.contains("Perishable")) {
+                                    this.quality = this.quality - 2;
+                                }
+                            }
+                        }
+                    } else {
+                        this.quality = 0; //this.quality - this.quality = 0
+                    }
+                } else {
+                    if (this.quality < 50) {
+                        this.quality = this.quality + 1;
+                    }
+                }
+                // Additional logic for eternal items after sellIn (though sellIn doesn't change)
+                if (this.name.equals("Eternal Artifact") && this.quality < 50) {
+                    this.quality = this.quality + 1;
+                }
+            }
+
+            // Ensure quality bounds
+            if (this.quality > 50 && !this.name.equals("Sulfuras, Hand of Ragnaros")) {
+                this.quality = 50;
+            }
+            if (this.quality < 0) {
+                this.quality = 0;
+            }
+        }
+    }

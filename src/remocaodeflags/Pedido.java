@@ -11,7 +11,7 @@ public class Pedido {
         return valor;
     }
     
-    public void setValor(double valor) {
+    public double setValor(double valor) {
         this.valor = valor;
     }
 }

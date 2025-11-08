@@ -14,25 +14,19 @@ public class Relatorio {
     private String titulo;
     private String conteudo;
     private String rodape;
+    FormatadorRelatorio formatadorRelatorio;
     
     public Relatorio(String titulo, String conteudo, String rodape) {
         this.titulo = titulo;
         this.conteudo = conteudo;
         this.rodape = rodape;
+        this.formatadorRelatorio =  new FormatadorRelatorio();
     }
     
     public void imprimir() {
-        // Formatação do título
-        String tituloFormatado = "=== " + titulo.toUpperCase() + " ===";
-        System.out.println(tituloFormatado);
-        
-        // Formatação do conteúdo
-        String conteudoFormatado = "  " + conteudo.replace("\n", "\n  ");
-        System.out.println(conteudoFormatado);
-        
-        // Formatação do rodapé
-        String rodapeFormatado = "--- " + rodape + " ---";
-        System.out.println(rodapeFormatado);
+        formatadorRelatorio.formatarTitulo(titulo);
+        formatadorRelatorio.formatarConteudo(conteudo);
+        formatadorRelatorio.formatarRodape(rodape);
     }
     
     public double calcularTotal(double[] valores) {
