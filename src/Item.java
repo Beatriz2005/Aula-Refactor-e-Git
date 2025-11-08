@@ -34,16 +34,7 @@ public class Item {
                 if (this.quality < 50) {
                     this.quality = this.quality + 1;
                     if (this.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (this.sellIn < 11) {
-                            if (this.quality < 50) {
-                                this.quality = this.quality + 1;
-                            }
-                        }
-                        if (this.sellIn < 6) {
-                            if (this.quality < 50) {
-                                this.quality = this.quality + 1;
-                            }
-                        }
+                        backstageQuality();
                     } else if (this.name.equals("Conjured Mana Cake")) {
                         // Conjured items degrade twice as fast
                         this.quality = this.quality + 1; // But for quality increase? Wait, adjust logic
@@ -79,9 +70,7 @@ public class Item {
                         this.quality = 0; //this.quality - this.quality = 0
                     }
                 } else {
-                    if (this.quality < 50) {
-                        this.quality = this.quality + 1;
-                    }
+                    improveQuality();
                 }
                 // Additional logic for eternal items after sellIn (though sellIn doesn't change)
                 if (this.name.equals("Eternal Artifact") && this.quality < 50) {
@@ -97,4 +86,19 @@ public class Item {
                 this.quality = 0;
             }
         }
+
+    private void backstageQuality() {
+        if (this.sellIn < 11) {
+            improveQuality();
+        }
+        if (this.sellIn < 6) {
+            improveQuality();
+        }
     }
+
+    private void improveQuality() {
+        if (this.quality < 50) {
+            this.quality = this.quality + 1;
+        }
+    }
+}
