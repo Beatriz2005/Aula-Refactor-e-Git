@@ -1,3 +1,9 @@
+/*Modificações realizadas:
+* - Movimentação do método da classe GildedROse para a classe Item
+* - Extração dos métodos para melhorar a qualidade no caso específico do Backstage
+* - Extração da classe Brie do método UpdateQuality
+* - 3 Code smells identificados: classe muito grande, método muito longo e featury envy de GildedRose em relação a classe Item*/
+
 public class Item {
     public String name;
     public int sellIn;
